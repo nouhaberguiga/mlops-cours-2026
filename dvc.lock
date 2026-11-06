@@ -107,8 +107,8 @@ stages:
       size: 8225
     - path: src/train.py
       hash: md5
-      md5: 728c89a2f755880d8047fda6fe833eae
-      size: 7679
+      md5: dc801b94f0dffcb1d31d3de3af4a7718
+      size: 7400
     params:
       params.yaml:
         train:
@@ -122,7 +122,7 @@ stages:
     outs:
     - path: models/model
       hash: md5
-      md5: 58d5371ef302eed2b2bf4ddd6bdad43f.dir
+      md5: b42b4fabb96a33150e745ae1f4fe6db6.dir
       size: 282182
       nfiles: 5
   evaluate:
@@ -142,7 +142,7 @@ stages:
       size: 2605
     - path: models/model
       hash: md5
-      md5: 58d5371ef302eed2b2bf4ddd6bdad43f.dir
+      md5: b42b4fabb96a33150e745ae1f4fe6db6.dir
       size: 282182
       nfiles: 5
     - path: src/dataset_config.py
@@ -155,8 +155,8 @@ stages:
       size: 1357
     - path: src/train.py
       hash: md5
-      md5: 728c89a2f755880d8047fda6fe833eae
-      size: 7679
+      md5: dc801b94f0dffcb1d31d3de3af4a7718
+      size: 7400
     params:
       params.yaml:
         train:
