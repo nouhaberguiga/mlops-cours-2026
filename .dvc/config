@@ -1,0 +1,6 @@
+[core]
+    remote = storage
+['remote "storage"']
+    url = s3://dvc-store/scoring
+    endpointurl = http://localhost:8333
+    region = us-east-1
