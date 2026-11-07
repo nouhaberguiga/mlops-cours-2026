@@ -56,12 +56,11 @@ spec:
     spec:
       containers:
         - name: mlflow
-          image: ghcr.io/mlflow/mlflow:v3.16.1
+          image: mlflow-local:v3.16.1-boto3
           command: ["/bin/sh", "-c"]
           # yamllint disable rule:line-length
           args:
             - >-
-              pip install --no-cache-dir --quiet boto3 &&
               exec mlflow server
               --backend-store-uri sqlite:////mlflow/mlflow.db
               --artifacts-destination s3://mlflow-artifacts

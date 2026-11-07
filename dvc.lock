@@ -3,6 +3,10 @@ stages:
   download:
     cmd: python -m src.download
     deps:
+    - path: dataset.yaml
+      hash: md5
+      md5: a9d8c00516b67d19fef2f4a049033380
+      size: 2605
     - path: src/dataset_config.py
       hash: md5
       md5: 3dfbc7152adfcc892ce94654d08a25e0
@@ -45,3 +49,126 @@ stages:
       hash: md5
       md5: 24b8e38b9c8688d495afc8eb5cb40127
       size: 139022
+  prepare:
+    cmd: python -m src.prepare
+    deps:
+    - path: data/raw/dataset.csv
+      hash: md5
+      md5: 24b8e38b9c8688d495afc8eb5cb40127
+      size: 139022
+    - path: dataset.yaml
+      hash: md5
+      md5: a9d8c00516b67d19fef2f4a049033380
+      size: 2605
+    - path: src/dataset_config.py
+      hash: md5
+      md5: 3dfbc7152adfcc892ce94654d08a25e0
+      size: 8225
+    - path: src/prepare.py
+      hash: md5
+      md5: 6966701efd0daff4c7fbc9a2c6c2165f
+      size: 1862
+    params:
+      params.yaml:
+        prepare:
+          id_column: request_id
+          event_timestamp: '2026-01-01T00:00:00+00:00'
+    outs:
+    - path: data/processed/features.parquet
+      hash: md5
+      md5: 290ffe76116b9c61f4e392a06da6219f
+      size: 31179
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 80c14461d82ef43b1897f9431f18922a
+      size: 28866
+    - path: data/processed/train.csv
+      hash: md5
+      md5: 77f6be6148e414198654bf8ff4e12d13
+      size: 114356
+  train:
+    cmd: python -m src.train
+    deps:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 80c14461d82ef43b1897f9431f18922a
+      size: 28866
+    - path: data/processed/train.csv
+      hash: md5
+      md5: 77f6be6148e414198654bf8ff4e12d13
+      size: 114356
+    - path: dataset.yaml
+      hash: md5
+      md5: a9d8c00516b67d19fef2f4a049033380
+      size: 2605
+    - path: src/dataset_config.py
+      hash: md5
+      md5: 3dfbc7152adfcc892ce94654d08a25e0
+      size: 8225
+    - path: src/train.py
+      hash: md5
+      md5: 728c89a2f755880d8047fda6fe833eae
+      size: 7679
+    params:
+      params.yaml:
+        train:
+          model: logistic_regression
+          C: 0.1
+          class_weight: balanced
+          n_estimators: 200
+          max_depth: 8
+          learning_rate: 0.1
+          random_state: 42
+    outs:
+    - path: models/model
+      hash: md5
+      md5: 58d5371ef302eed2b2bf4ddd6bdad43f.dir
+      size: 282182
+      nfiles: 5
+  evaluate:
+    cmd: python -m src.evaluate
+    deps:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 80c14461d82ef43b1897f9431f18922a
+      size: 28866
+    - path: data/processed/train.csv
+      hash: md5
+      md5: 77f6be6148e414198654bf8ff4e12d13
+      size: 114356
+    - path: dataset.yaml
+      hash: md5
+      md5: a9d8c00516b67d19fef2f4a049033380
+      size: 2605
+    - path: models/model
+      hash: md5
+      md5: 58d5371ef302eed2b2bf4ddd6bdad43f.dir
+      size: 282182
+      nfiles: 5
+    - path: src/dataset_config.py
+      hash: md5
+      md5: 3dfbc7152adfcc892ce94654d08a25e0
+      size: 8225
+    - path: src/evaluate.py
+      hash: md5
+      md5: 116c029b853017c51248d867232bf784
+      size: 1357
+    - path: src/train.py
+      hash: md5
+      md5: 728c89a2f755880d8047fda6fe833eae
+      size: 7679
+    params:
+      params.yaml:
+        train:
+          model: logistic_regression
+          C: 0.1
+          class_weight: balanced
+          n_estimators: 200
+          max_depth: 8
+          learning_rate: 0.1
+          random_state: 42
+    outs:
+    - path: reports/metrics.json
+      hash: md5
+      md5: f14a151edacb53deb86bcab4f530c851
+      size: 219
