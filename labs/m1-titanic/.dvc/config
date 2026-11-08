@@ -1,0 +1,6 @@
+[core]
+    remote = myremote
+['remote "myremote"']
+    url = s3://dvc-store
+    endpointurl = http://localhost:8333
+    region = us-east-1

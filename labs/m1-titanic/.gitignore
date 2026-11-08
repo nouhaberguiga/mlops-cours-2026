@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+wheels/
+
+# Environnement virtuel
+.venv/
+venv/
+
+# Fichiers sensibles
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# DVC credentials
+.dvc/config.local
+
+# MLflow
+mlflow.db
+mlruns/
+
+# Modèles générés
+models/*.pkl
+models/*.joblib
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# Système
+.DS_Store
+Thumbs.db
