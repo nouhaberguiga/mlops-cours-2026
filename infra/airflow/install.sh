@@ -15,7 +15,7 @@ cd "$(dirname "$0")"
 source ../versions.env
 
 KCTX="kind-${KIND_CLUSTER_NAME}"
-K=(kubectl --context "${KCTX}")
+K=(docker exec -i mlops-lab-control-plane kubectl --kubeconfig=/etc/kubernetes/admin.conf)
 
 echo "==> 1/5 docker-compose.yaml officiel d'Airflow ${AIRFLOW_VERSION} (non modifié)"
 if [ ! -f docker-compose.yaml ]; then

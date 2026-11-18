@@ -1,20 +1,13 @@
-# Fichier : infra/airflow/docker-compose.override.yaml
-# Adaptations du docker-compose.yaml OFFICIEL d'Airflow (téléchargé par
-# install.sh, non modifié) pour le cours. Docker Compose fusionne
-# automatiquement ce fichier avec docker-compose.yaml.
-#   - UI/API sur http://localhost:8081 (le 8080 est pris par l'UI KFP)
-#   - pas des ~80 DAGs d'exemple
-#   - DAGs lus dans le dossier dags/ à la racine du repo
-#   - conteneurs branchés sur le réseau Docker « kind » + kubeconfig interne :
-#     le KubernetesPodOperator lance ses pods dans le cluster mlops-lab
 x-cours-mlops: &cours-mlops
   environment:
     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    PYTHONPATH: /opt/airflow/project
     AIRFLOW_CONN_KUBERNETES_DEFAULT: >-
       {"conn_type": "kubernetes",
       "extra": {"kube_config_path": "/opt/airflow/kube/config"}}
   volumes:
     - ../../dags:/opt/airflow/dags
+    - ../..:/opt/airflow/project:ro
     - ./kubeconfig:/opt/airflow/kube/config:ro
 
 services:
