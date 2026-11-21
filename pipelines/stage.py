@@ -122,7 +122,7 @@ def xcom_summary(work: Path) -> dict:
     """Prépare les informations utiles aux tâches Airflow suivantes."""
     from mlflow.models import Model
 
-    from src.evaluate import METRICS_JSON
+    from src.evaluate import METRICS_FILE
     from src.train import MODEL_DIR
 
     summary = {}
@@ -132,9 +132,9 @@ def xcom_summary(work: Path) -> dict:
             work / MODEL_DIR
         ).metadata["mlflow_run_id"]
 
-    if (work / METRICS_JSON).exists():
+    if (work / METRICS_FILE).exists():
         summary["metrics"] = json.loads(
-            (work / METRICS_JSON).read_text()
+            (work / METRICS_FILE).read_text()
         )
 
     return summary
