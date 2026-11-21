@@ -265,12 +265,12 @@ EOF
 airflow_up() { t 20 "${AF[@]}" ps --services --status running 2>/dev/null | grep -qx airflow-scheduler; }
 airflow_live_ok() {
   local errors dags runs
-  errors=$(t 90 "${AF[@]}" exec -T airflow-scheduler airflow dags list-import-errors -o json \
+  errors=$(t 90 docker exec airflow-airflow-scheduler-1 airflow dags list-import-errors -o json \
     2>/dev/null | tail -n 1)
   ! grep -q "scoring_dag" <<<"$errors" || return 1
-  dags=$(t 90 "${AF[@]}" exec -T airflow-scheduler airflow dags list -o json 2>/dev/null |
+  dags=$(t 90 docker exec airflow-airflow-scheduler-1 airflow dags list -o json 2>/dev/null |
     tail -n 1)
-  runs=$(t 90 "${AF[@]}" exec -T airflow-scheduler airflow dags list-runs scoring_dag \
+  runs=$(t 90 docker exec airflow-airflow-scheduler-1 airflow dags list-runs scoring_dag \
     --state success -o json 2>/dev/null | tail -n 1)
   py - "$dags" "$runs" <<'EOF'
 import json
