@@ -63,3 +63,8 @@ rag/docs/*.pdf
 
 # --- Cours : PDF générés (make pdf) ---
 dist/
+# --- Sécurité et sauvegardes locales ---
+backups/
+*.pem
+*.key
+*.secret
