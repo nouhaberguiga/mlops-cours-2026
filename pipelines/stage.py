@@ -50,7 +50,15 @@ def run_stage(module: str, args=(), inputs=None, outputs=None, env=None) -> None
         for rel, src in (inputs or {}).items():
             copy(src, work / rel)
 
-        execute(module, args, work, env)
+        try:
+            execute(module, args, work, env)
+        except subprocess.CalledProcessError:
+            # Conserver les rapports produits avant l'échec volontaire d'un Gate.
+            for rel, dst in (outputs or {}).items():
+                source = work / rel
+                if source.exists():
+                    copy(source, dst)
+            raise
 
         for rel, dst in (outputs or {}).items():
             copy(work / rel, dst)

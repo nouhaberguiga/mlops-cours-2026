@@ -6,9 +6,9 @@ from airflow.providers.cncf.kubernetes.operators.pod import KubernetesPodOperato
 from airflow.sdk import DAG
 from kubernetes.client import models as k8s
 
-PIPELINE_IMAGE = "localhost:5001/scoring-pipeline:1.0.0"
+PIPELINE_IMAGE = "localhost:5001/scoring-pipeline:1.2.0"
 
-IMAGE = "localhost:5001/scoring-pipeline:1.0.0"
+IMAGE = "localhost:5001/scoring-pipeline:1.2.0"
 WORKSPACE = "s3://airflow-data/scoring/{{ run_id }}"
 
 ENV = {

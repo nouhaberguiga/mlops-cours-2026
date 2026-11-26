@@ -1,15 +1,22 @@
 FROM python:3.12-slim
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1
-
 WORKDIR /app
 
-COPY pipelines/requirements.txt /app/requirements.txt
+COPY pipelines/requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir --root-user-action=ignore -r /tmp/requirements.txt \
+    && pip install --no-cache-dir --root-user-action=ignore kfp==2.17.0
 
-RUN pip install --no-cache-dir -r /app/requirements.txt
+COPY dataset.yaml params.yaml ./
+COPY src/ src/
+COPY gx/ gx/
+COPY tests/ tests/
+COPY pipelines/__init__.py pipelines/stage.py pipelines/
 
-COPY . /app
+ENV PYTHONPATH=/app \
+    DATASET_CONFIG=/app/dataset.yaml \
+    PYTHONUNBUFFERED=1 \
+    DO_NOT_TRACK=true
 
-ENV PYTHONPATH=/app
+ARG VERSION=dev
+LABEL org.opencontainers.image.title="scoring-pipeline" \
+      org.opencontainers.image.version="${VERSION}"

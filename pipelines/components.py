@@ -5,8 +5,10 @@ from pipelines.scoring_pipeline import (
     ingest_data,
     validate_data,
     prepare_features,
+    detect_drift,
     train_model,
     evaluate_model,
+    validate_model,
     register_model,
 )
 
@@ -15,7 +17,9 @@ __all__ = [
     "ingest_data",
     "validate_data",
     "prepare_features",
+    "detect_drift",
     "train_model",
     "evaluate_model",
+    "validate_model",
     "register_model",
 ]
